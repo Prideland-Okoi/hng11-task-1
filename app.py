@@ -17,8 +17,8 @@ def hello():
     try:
         # Get location data using IP
         # location_response = requests.get(f'https://ipapi.co/{client_ip}/json/')
-        # location_response = requests.get(f'https://ipinfo.io/{client_ip}/json')
-        location_response = requests.get('https://freegeoip.app/json/')
+        location_response = requests.get(f'https://ipinfo.io/{client_ip}/json/')
+        # location_response = requests.get('https://freegeoip.app/json/')
         location_data = location_response.json()
         location = location_data.get('city', 'Unknown Location')
 
