@@ -8,6 +8,7 @@ load_dotenv()
 app = Flask(__name__)
 
 WEATHER_ENDPOINT = "http://api.weatherapi.com/v1/current.json"
+weather_api_key = os.getenv('API_KEY')
 
 @app.route('/api/hello', methods=['GET'])
 def hello():
@@ -19,7 +20,7 @@ def hello():
         location_data = location_response.json()
         city = location_data.get('city', 'Unknown location')
 
-        weather_response = requests.get(WEATHER_ENDPOINT, params={'key': API_KEY, 'q': city})
+        weather_response = requests.get(WEATHER_ENDPOINT, params={'key': weather_api_key, 'q': city})
         weather_data = weather_response.json()
         temperature = weather_data['current']['temp_c']
 
