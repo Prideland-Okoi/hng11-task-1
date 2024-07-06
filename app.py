@@ -17,7 +17,7 @@ def hello():
 
     try:
         # location_response = requests.get(f'http://ip-api.com/json/154.161.179.228')
-        location_response = requests.get(f'https://ip-api.co/{client_ip}/json/')
+        location_response = requests.get(f'https://ip-api.com/json/{client_ip}')
         location_data = location_response.json()
         city = location_data.get('city', 'Unknown location')
 
