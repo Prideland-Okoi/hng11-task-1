@@ -13,16 +13,19 @@ weather_api_key = os.getenv('API_KEY')
 @app.route('/api/hello', methods=['GET'])
 def hello():
     visitor_name = request.args.get('visitor_name', 'Visitor')
-    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0].strip()
 
     try:
-        location_response = requests.get(f'https://ip-api.com/json/102.221.239.142')
+        location_response = requests.get(f'https://ip-api.com/json/{client_ip}')
         location_data = location_response.json()
         city = location_data.get('city', 'Unknown location')
 
-        weather_response = requests.get(WEATHER_ENDPOINT, params={'key': weather_api_key, 'q': city})
-        weather_data = weather_response.json()
-        temperature = weather_data['current']['temp_c']
+        if city != 'Unknown location':
+            weather_response = requests.get(WEATHER_ENDPOINT, params={'key': weather_api_key, 'q': city})
+            weather_data = weather_response.json()
+            temperature = weather_data['current']['temp_c']
+        else:
+            temperature = 'N/A'
 
         return jsonify({
             'client_ip': client_ip,
